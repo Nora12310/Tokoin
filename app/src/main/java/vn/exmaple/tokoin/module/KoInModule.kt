@@ -1,5 +1,6 @@
 package vn.exmaple.tokoin.module
 
+import org.akd.support.adapter.lists.FlexibleAdapter
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -11,6 +12,8 @@ import vn.exmaple.tokoin.ui.home.HomeViewModel
 val appModule = module {
     single { NewsAPIGenerator(androidContext()) }
     single<INewsRepository> { NewsRepositoryImpl(get()) }
+
+    factory { FlexibleAdapter() }
 }
 
 val viewModelModule = module {

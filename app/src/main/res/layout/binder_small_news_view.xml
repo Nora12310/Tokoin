@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:scaleType="centerCrop"
+        android:background="@color/md_grey_200"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/error_shot"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingBottom="@dimen/_3sdp"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+        android:textColor="@color/md_black_1000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:maxLines="2"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_3sdp"
+        android:textColor="@color/md_black_1000"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        tools:text="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/tv_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/_9ssp"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail"
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/_9ssp"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail"
+        app:layout_constraintStart_toEndOf="@id/tv_source"
+        tools:text="@tools:sample/date/ddmmyy" />
+</androidx.constraintlayout.widget.ConstraintLayout>

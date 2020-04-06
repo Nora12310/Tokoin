@@ -1,6 +1,9 @@
 package vn.exmaple.tokoin.model
 
+import android.annotation.SuppressLint
 import org.akd.support.model.IFlexibleItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Article(
     val author: String? = null,
@@ -8,7 +11,7 @@ data class Article(
     val description: String? = null,
     val url: String? = null,
     val urlToImage: String? = null,
-    val publishedAt: String? = null,
+    val publishedAt: Date? = null,
     val content: String? = null,
     val source: Source? = null
 ) : IFlexibleItem {
@@ -25,4 +28,10 @@ data class Article(
                 && iFlexibleItem.publishedAt == publishedAt
                 && iFlexibleItem.content == content
                 && iFlexibleItem.source == source
+
+    @SuppressLint("SimpleDateFormat")
+    fun getDateFormat(): String {
+        val formatter = SimpleDateFormat("dd/MM/yyyy")
+        return publishedAt?.let { formatter.format(publishedAt) } ?: "n/a"
+    }
 }
