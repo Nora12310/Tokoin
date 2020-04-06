@@ -21,6 +21,6 @@ class DateFormatFactory : JsonAdapter<Date>() {
     }
 
     companion object {
-        const val SERVER_FORMAT = ("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        const val SERVER_FORMAT = ("yyyy-MM-dd'T'HH:mm:ss'Z'")
     }
 }
