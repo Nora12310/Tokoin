@@ -33,7 +33,6 @@ class HomeFragment : Fragment() {
         initRecyclerView()
 
         mViewModel.mTopHeadlineLive.observe(viewLifecycleOwner, Observer { mAdapter.submit(it) })
-        mViewModel.getTopHeadline()
     }
 
     private fun initRecyclerView() {

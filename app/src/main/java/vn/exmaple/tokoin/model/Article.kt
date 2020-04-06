@@ -1,20 +1,26 @@
 package vn.exmaple.tokoin.model
 
 import android.annotation.SuppressLint
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import org.akd.support.model.IFlexibleItem
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+@Entity
 data class Article(
-    val author: String? = null,
-    val title: String? = null,
-    val description: String? = null,
-    val url: String? = null,
-    val urlToImage: String? = null,
-    val publishedAt: Date? = null,
-    val content: String? = null,
-    val source: Source? = null
+    var title: String? = null,
+    var author: String? = null,
+    var description: String? = null,
+    var url: String? = null,
+    var urlToImage: String? = null,
+    var publishedAt: Date? = null,
+    var content: String? = null,
+    var source: Source? = null
 ) : IFlexibleItem {
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
+
     override fun areItemsTheSame(iFlexibleItem: IFlexibleItem): Boolean =
         iFlexibleItem is Article && iFlexibleItem.title == title
 

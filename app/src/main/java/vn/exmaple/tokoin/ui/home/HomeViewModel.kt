@@ -1,31 +1,28 @@
 package vn.exmaple.tokoin.ui.home
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.akd.support.extensions.mutableLiveDataOf
+import org.akd.muxic.data.local.AppDatabase
+import vn.exmaple.tokoin.data.local.ArticleBoundaryCallback
 import vn.exmaple.tokoin.data.remote.INewsRepository
-import vn.exmaple.tokoin.data.remote.request.TopHeadlineRequest
 import vn.exmaple.tokoin.model.Article
 
 class HomeViewModel(
     application: Application,
-    private val repository: INewsRepository
+    dao: AppDatabase,
+    repository: INewsRepository
 ) : AndroidViewModel(application) {
-    val mTopHeadlineLive: MutableLiveData<List<Article>> = mutableLiveDataOf()
     private val mHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
     }
-
-    fun getTopHeadline() {
-        viewModelScope.launch(mHandler) {
-            val request = TopHeadlineRequest("us")
-            val items = withContext(Dispatchers.IO) { repository.getHeadlineNews(request) }
-            mTopHeadlineLive.value = items
-        }
-    }
+    val mTopHeadlineLive: LiveData<PagedList<Article>> = dao.article.getAll()
+        .toLiveData(
+            pageSize = 50,
+            boundaryCallback = ArticleBoundaryCallback(repository, dao, viewModelScope, mHandler)
+        )
 }
