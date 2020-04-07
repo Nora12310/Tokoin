@@ -7,17 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.akd.support.adapter.lists.FlexibleAdapter
+import org.akd.support.adapter.lists.PageListAdapter
+import org.akd.support.extensions.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.exmaple.tokoin.binder.BigNewsViewBinder
 import vn.exmaple.tokoin.binder.SmallNewsViewBinder
+import vn.exmaple.tokoin.data.local.TopHeadlineBoundaryCallback
 import vn.exmaple.tokoin.databinding.FragmentHomeBinding
 import vn.exmaple.tokoin.model.Article
 
 class HomeFragment : Fragment() {
     private val mViewModel: HomeViewModel by viewModel()
-    private val mAdapter: FlexibleAdapter by inject()
+    private val mAdapter: PageListAdapter by inject()
     private val mBinder: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -33,7 +35,13 @@ class HomeFragment : Fragment() {
         initRecyclerView()
 
         mViewModel.mTopHeadlineLive.observe(viewLifecycleOwner, Observer { mAdapter.submit(it) })
-        mViewModel.getTopHeadline()
+        mViewModel.mStateLive.observe(viewLifecycleOwner, Observer {
+            val visibility = if (it == TopHeadlineBoundaryCallback.LOADING) View.VISIBLE else View.GONE
+            mBinder.progress.visibility = visibility
+        })
+        mViewModel.mNewArticleLive.observe(viewLifecycleOwner, Observer {
+            if (it > 0) "There are $it new posts".toast(activity)
+        })
     }
 
     private fun initRecyclerView() {
