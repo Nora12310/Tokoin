@@ -15,7 +15,7 @@
         android:id="@+id/navigation_filterable"
         android:name="vn.exmaple.tokoin.ui.profile.ProfileFragment"
         android:label="@string/title_filterable"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_filterable" />
 
     <fragment
         android:id="@+id/navigation_profile"

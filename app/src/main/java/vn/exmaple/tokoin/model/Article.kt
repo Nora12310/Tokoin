@@ -17,12 +17,16 @@ data class Article(
     var urlToImage: String? = null,
     var publishedAt: Date? = null,
     var content: String? = null,
-    var source: Source? = null
+    var source: Source? = null,
+    var keyword: String? = null
 ) : IFlexibleItem {
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = (title + author + url).hashCode()
 
     override fun areItemsTheSame(iFlexibleItem: IFlexibleItem): Boolean =
         iFlexibleItem is Article && iFlexibleItem.title == title
+                && iFlexibleItem.url == url
+                && iFlexibleItem.author == author
 
     override fun areContentsTheSame(iFlexibleItem: IFlexibleItem): Boolean =
         iFlexibleItem is Article
@@ -34,10 +38,11 @@ data class Article(
                 && iFlexibleItem.publishedAt == publishedAt
                 && iFlexibleItem.content == content
                 && iFlexibleItem.source == source
+                && iFlexibleItem.keyword == keyword
 
     @SuppressLint("SimpleDateFormat")
     fun getDateFormat(): String {
         val formatter = SimpleDateFormat("dd/MM/yyyy")
-        return publishedAt?.let { formatter.format(publishedAt) } ?: "n/a"
+        return publishedAt?.let { formatter.format(it) } ?: "n/a"
     }
 }

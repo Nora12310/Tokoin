@@ -10,7 +10,7 @@ import vn.exmaple.tokoin.data.local.ArticleDao
 import vn.exmaple.tokoin.data.local.converter.RoomConverter
 import vn.exmaple.tokoin.model.Article
 
-@Database(entities = [Article::class], version = 1, exportSchema = false)
+@Database(entities = [Article::class], version = 2, exportSchema = false)
 @TypeConverters(RoomConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val article: ArticleDao

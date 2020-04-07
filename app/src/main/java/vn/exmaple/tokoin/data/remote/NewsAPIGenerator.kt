@@ -7,12 +7,9 @@ import okhttp3.OkHttpClient
 import org.akd.support.data.domain.APIGenerator
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
-import vn.exmaple.tokoin.model.TopHeadline
+import vn.exmaple.tokoin.model.NewsResponse
 
-class NewsAPIGenerator(context: Context) : APIGenerator(
-    context,
-    URL
-) {
+class NewsAPIGenerator(context: Context) : APIGenerator(context, URL) {
     private val cache: Cache = Cache(context.cacheDir, CACHE_SIZE)
     val api: APILink = createService(APILink::class.java)
 
@@ -41,6 +38,10 @@ class NewsAPIGenerator(context: Context) : APIGenerator(
 
     interface APILink {
         @GET("top-headlines")
-        suspend fun getTopHeadline(@QueryMap maps: Map<String, String>): TopHeadline
+        suspend fun getTopHeadline(@QueryMap maps: Map<String, String>): NewsResponse
+
+
+        @GET("everything")
+        suspend fun getEverything(@QueryMap maps: Map<String, String>): NewsResponse
     }
 }

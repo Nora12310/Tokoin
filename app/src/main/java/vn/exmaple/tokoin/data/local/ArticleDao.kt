@@ -8,7 +8,7 @@ import vn.exmaple.tokoin.model.Article
 @Dao
 interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(vararg recipes: Article)
+    suspend fun save(vararg recipes: Article): List<Long>
 
     @Delete()
     suspend fun delete(recipe: Article)
@@ -16,6 +16,9 @@ interface ArticleDao {
     @Query("SELECT * FROM article WHERE title=:title LIMIT 1")
     suspend fun getArticle(title: Int): Article?
 
-    @Query("SELECT * FROM article")
-    fun getAll(): DataSource.Factory<Int, Article>
+    @Query("SELECT * FROM article WHERE keyword=:keyword")
+    fun getAll(keyword: String): DataSource.Factory<Int, Article>
+
+    @Query("SELECT COUNT(*) FROM article WHERE keyword=:keyword")
+    suspend fun count(keyword: String): Int
 }
