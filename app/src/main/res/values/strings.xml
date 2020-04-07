@@ -3,4 +3,8 @@
     <string name="title_home">Top Headline News</string>
     <string name="title_filterable">Bitcoin</string>
     <string name="title_profile">Profile</string>
+    <string name="add_account">Add another account</string>
+    <string name="user_name">Username</string>
+    <string name="keyword">Keywords you will follow</string>
+    <string name="done">Done</string>
 </resources>

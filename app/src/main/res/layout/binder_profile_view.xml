@@ -35,7 +35,7 @@
         android:paddingBottom="@dimen/_10sdp"
         android:text="@string/app_name"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toTopOf="@id/tv_following"
+        app:layout_constraintBottom_toTopOf="@id/tv_add_profile"
         app:layout_constraintEnd_toStartOf="@id/iv_check"
         app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +43,7 @@
         tools:text="@tools:sample/full_names" />
 
     <TextView
-        android:id="@+id/tv_following"
+        android:id="@+id/tv_add_profile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

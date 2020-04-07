@@ -5,21 +5,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import org.akd.support.adapter.lists.PageListAdapter
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.exmaple.tokoin.R
+import vn.exmaple.tokoin.binder.AccountViewBinder
+import vn.exmaple.tokoin.databinding.FragmentProfileBinding
+import vn.exmaple.tokoin.dialog.AddProfileDialogFragment
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), View.OnClickListener {
+    private val mBinding: FragmentProfileBinding by lazy {
+        FragmentProfileBinding.inflate(layoutInflater)
+    }
 
-    private lateinit var dashboardViewModel: ProfileViewModel
+    private val mViewModel: ProfileViewModel by viewModel()
+    private val mAdapter: PageListAdapter by inject()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_profile, container, false)
-        return root
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = mBinding.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+        mBinding.tvAddProfile.setOnClickListener(this)
+        mViewModel.mProfilesLive.observe(viewLifecycleOwner, Observer {
+            mAdapter.submit(it)
+        })
+    }
+
+    private fun initRecyclerView() {
+        mAdapter.register(AccountViewBinder())
+        mBinding.recyclerView.layoutManager = LinearLayoutManager(context)
+        mBinding.recyclerView.adapter = mAdapter
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.tv_add_profile -> {
+                val dialog = AddProfileDialogFragment()
+                dialog.show(childFragmentManager, null)
+            }
+        }
     }
 }

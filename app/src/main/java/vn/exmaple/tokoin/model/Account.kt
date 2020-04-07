@@ -1,11 +1,14 @@
 package vn.exmaple.tokoin.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import org.akd.support.model.IFlexibleItem
 
+@Entity
 data class Account(
-    val id: String,
-    val userName: String,
-    val keyword: String
+    @PrimaryKey var id: String,
+    var userName: String,
+    var keyword: String
 ) : IFlexibleItem {
     override fun areItemsTheSame(iFlexibleItem: IFlexibleItem): Boolean =
         iFlexibleItem is Account && iFlexibleItem.id == id

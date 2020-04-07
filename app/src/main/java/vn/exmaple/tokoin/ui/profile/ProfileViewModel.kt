@@ -1,13 +1,17 @@
 package vn.exmaple.tokoin.ui.profile
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
+import org.akd.muxic.data.local.AppDatabase
+import vn.exmaple.tokoin.model.Account
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    application: Application,
+    dao: AppDatabase
+) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
+    val mProfilesLive: LiveData<PagedList<Account>> = dao.account.getAll().toLiveData(pageSize = 20)
 }
