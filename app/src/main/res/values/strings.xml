@@ -11,4 +11,5 @@
     <string name="msg_username_or_keyword_empty">Username or Keyword is empty</string>
     <string name="msg_account_existed">This account is existed in app. Please using another username.</string>
     <string name="update_if_account_existed">Update if account existed</string>
+    <string name="you_not_login">Login to show news</string>
 </resources>
