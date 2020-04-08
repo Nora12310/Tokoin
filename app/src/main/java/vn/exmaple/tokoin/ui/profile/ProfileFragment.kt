@@ -17,7 +17,7 @@ import vn.exmaple.tokoin.common.Constant
 import vn.exmaple.tokoin.databinding.FragmentProfileBinding
 import vn.exmaple.tokoin.dialog.AddProfileDialogFragment
 import vn.exmaple.tokoin.model.Account
-import vn.vtvlive.vtvpay.base.adapter.lists.base.SingleChoiceMode
+import org.akd.support.adapter.lists.base.SingleChoiceMode
 
 class ProfileFragment : Fragment(), View.OnClickListener, AccountViewBinder.OnAccountClickListener {
     private val mBinding: FragmentProfileBinding by lazy {
