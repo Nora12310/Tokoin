@@ -27,7 +27,7 @@ class AddProfileDialogViewModel(
     val mErrorLive: MutableLiveData<Int> = mutableLiveDataOf()
     val mExecuteLive: MutableLiveData<Account> = mutableLiveDataOf()
 
-    fun save(username: String, keyword: String) {
+    fun save(username: String, keyword: String, isUpdate: Boolean = false) {
         if (username.trim().isEmpty() || keyword.trim().isEmpty()) {
             mErrorLive.value = R.string.msg_username_or_keyword_empty
             return
@@ -35,7 +35,7 @@ class AddProfileDialogViewModel(
         viewModelScope.launch(mHandler) {
             val id = username.trim().toLowerCase(Locale.getDefault()).hashCode()
             val existedProfile = withContext(Dispatchers.IO) { dao.account.get(id) }
-            if (existedProfile != null) {
+            if (existedProfile != null && !isUpdate) {
                 mErrorLive.value = R.string.msg_account_existed
                 return@launch
             }

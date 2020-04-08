@@ -3,11 +3,12 @@
     <string name="title_home">Top Headline News</string>
     <string name="title_filterable">Bitcoin</string>
     <string name="title_profile">Profile</string>
-    <string name="add_account">Add another account</string>
+    <string name="add_account">Add or Update account</string>
     <string name="user_name">Username</string>
     <string name="keyword">Keywords you will follow</string>
     <string name="done">Done</string>
     <string name="following">This Account is following %s keyword.</string>
     <string name="msg_username_or_keyword_empty">Username or Keyword is empty</string>
     <string name="msg_account_existed">This account is existed in app. Please using another username.</string>
+    <string name="update_if_account_existed">Update if account existed</string>
 </resources>
