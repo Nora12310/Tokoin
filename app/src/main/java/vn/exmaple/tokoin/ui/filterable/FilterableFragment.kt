@@ -1,5 +1,6 @@
 package vn.exmaple.tokoin.ui.filterable
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import vn.exmaple.tokoin.binder.SmallNewsViewBinder
 import vn.exmaple.tokoin.data.local.TopHeadlineBoundaryCallback
 import vn.exmaple.tokoin.databinding.FragmentFilterableBinding
 import vn.exmaple.tokoin.model.Article
+import java.util.*
 
 class FilterableFragment : Fragment() {
     private val mViewModel: FilterableViewModel by viewModel()
@@ -30,17 +32,20 @@ class FilterableFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = mBinder.root
 
+    @SuppressLint("DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
 
         mViewModel.mTopHeadlineLive.observe(viewLifecycleOwner, Observer { mAdapter.submit(it) })
         mViewModel.mStateLive.observe(viewLifecycleOwner, Observer {
-            val visibility = if (it == TopHeadlineBoundaryCallback.LOADING) View.VISIBLE else View.GONE
+            val visibility = if (it == TopHeadlineBoundaryCallback.LOADING)
+                View.VISIBLE else View.GONE
             mBinder.progress.visibility = visibility
         })
-        mViewModel.mNewArticleLive.observe(viewLifecycleOwner, Observer {
-            if (it > 0) "There are $it new posts".toast(activity)
+        mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer {
+            mViewModel.mFilterTextLive.value = it.keyword
+            mBinder.tvAppName.text = it.keyword.capitalize()
         })
     }
 
