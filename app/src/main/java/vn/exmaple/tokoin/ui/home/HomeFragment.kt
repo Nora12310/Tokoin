@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
             mBinder.progress.visibility = visibility
         })
         mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer {
-            "${it.userName} logged".toast(activity)
+           /// Just now. we don't needed.
         })
     }
 
