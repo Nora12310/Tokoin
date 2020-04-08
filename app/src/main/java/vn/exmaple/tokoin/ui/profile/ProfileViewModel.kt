@@ -7,25 +7,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.akd.muxic.data.local.AppDatabase
 import org.akd.support.extensions.mutableLiveDataOf
 import org.akd.support.util.preference.SharePrefUtil
 import vn.exmaple.tokoin.common.Constant
-import vn.exmaple.tokoin.data.local.TopHeadlineBoundaryCallback
 import vn.exmaple.tokoin.model.Account
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class ProfileViewModel(
     application: Application,
-    dao: AppDatabase
+    private val dao: AppDatabase
 ) : AndroidViewModel(application) {
     private val mSharePref: SharePrefUtil = SharePrefUtil.with(application.applicationContext).ok()
     val mProfilesLive: LiveData<PagedList<Account>> = dao.account.getAll().toLiveData(pageSize = 20)
     private val mHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
+    }
+
+    val mQueriesAccount: MutableLiveData<Account> = mutableLiveDataOf()
+
+    fun getQueriesAccount(id: Int) {
+        viewModelScope.launch(mHandler) {
+            val account = withContext(Dispatchers.IO) { dao.account.get(id) }
+            account?.let { mQueriesAccount.value = account }
+        }
     }
 
     val mAccountIsActiveLive: LiveData<Account> =

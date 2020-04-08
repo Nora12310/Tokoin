@@ -7,22 +7,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.akd.support.adapter.lists.PageListAdapter
+import org.akd.support.util.preference.SharePrefUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.exmaple.tokoin.R
 import vn.exmaple.tokoin.binder.AccountViewBinder
+import vn.exmaple.tokoin.common.Constant
 import vn.exmaple.tokoin.databinding.FragmentProfileBinding
 import vn.exmaple.tokoin.dialog.AddProfileDialogFragment
 import vn.exmaple.tokoin.model.Account
 import vn.vtvlive.vtvpay.base.adapter.lists.base.SingleChoiceMode
 
-class ProfileFragment : Fragment(), View.OnClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener, AccountViewBinder.OnAccountClickListener {
     private val mBinding: FragmentProfileBinding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)
     }
 
+    private val mSharePref: SharePrefUtil by lazy { SharePrefUtil.with(context).ok() }
     private val mViewModel: ProfileViewModel by viewModel()
     private val mAdapter: PageListAdapter by inject()
 
@@ -38,18 +40,25 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         mBinding.tvAddProfile.setOnClickListener(this)
         mViewModel.mProfilesLive.observe(viewLifecycleOwner, Observer {
             mAdapter.submit(it)
-            recycler_view.postDelayed({
-                mAdapter.setSelected(0, true)
-            }, 200L)
+            selectedProfileIfNeeded()
         })
         mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer { updateUi(it) })
+        mViewModel.mQueriesAccount.observe(viewLifecycleOwner, Observer {
+            val index = mAdapter.indexOf(it)
+            mBinding.recyclerView.post { mAdapter.setSelected(index, true) }
+        })
     }
 
     private fun initRecyclerView() {
-        mAdapter.register(AccountViewBinder())
+        mAdapter.register(AccountViewBinder(this))
         mAdapter.setChoiceMode(SingleChoiceMode())
         mBinding.recyclerView.layoutManager = LinearLayoutManager(context)
         mBinding.recyclerView.adapter = mAdapter
+    }
+
+    private fun selectedProfileIfNeeded() {
+        val id = mSharePref.readIntPref(Constant.ACCOUNT_ID, 0)
+        mViewModel.getQueriesAccount(id)
     }
 
     override fun onClick(v: View) {
@@ -66,5 +75,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun updateUi(account: Account) {
         mBinding.tvName.text = account.userName
         mBinding.tvFollow.text = getString(R.string.following).format(account.keyword)
+    }
+
+    override fun onAccountClicked(holder: AccountViewBinder.ViewHolder) {
+        mAdapter.setSelected(holder.adapterPosition, true)
+        updateUi(holder.mAccount)
+        mSharePref.saveIntPref(Constant.ACCOUNT_ID, holder.mAccount.id)
     }
 }
