@@ -7,19 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.akd.support.adapter.lists.PageListAdapter
-import org.akd.support.extensions.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import vn.exmaple.tokoin.R
 import vn.exmaple.tokoin.binder.BigNewsViewBinder
+import vn.exmaple.tokoin.binder.OnArticleClickListener
 import vn.exmaple.tokoin.binder.SmallNewsViewBinder
 import vn.exmaple.tokoin.data.local.TopHeadlineBoundaryCallback
 import vn.exmaple.tokoin.databinding.FragmentFilterableBinding
 import vn.exmaple.tokoin.model.Article
-import java.util.*
 
-class FilterableFragment : Fragment() {
+class FilterableFragment : Fragment(), OnArticleClickListener {
     private val mViewModel: FilterableViewModel by viewModel()
     private val mAdapter: PageListAdapter by inject()
     private val mBinder: FragmentFilterableBinding by lazy {
@@ -52,12 +53,18 @@ class FilterableFragment : Fragment() {
     private fun initRecyclerView() {
         //register view type for adapter.
         mAdapter.register(Article::class).to(
-            BigNewsViewBinder(), SmallNewsViewBinder()
+            BigNewsViewBinder(this), SmallNewsViewBinder(this)
         ).withKotlinClassLinker { index, _ ->
             if (index % 5 == 0) BigNewsViewBinder::class
             else SmallNewsViewBinder::class
         }
         mBinder.recyclerView.layoutManager = LinearLayoutManager(context)
         mBinder.recyclerView.adapter = mAdapter
+    }
+
+    override fun onArticleClicked(article: Article?) {
+        val bundle = Bundle()
+        bundle.putString("url", article?.url)
+        findNavController().navigate(R.id.act_filter_to_detail_screen, bundle)
     }
 }

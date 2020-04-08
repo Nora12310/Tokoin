@@ -10,16 +10,23 @@ import org.akd.support.adapter.lists.base.ItemViewBinder
 import vn.exmaple.tokoin.R
 import vn.exmaple.tokoin.model.Article
 
-class SmallNewsViewBinder : ItemViewBinder<Article, SmallNewsViewBinder.ViewHolder>() {
+class SmallNewsViewBinder(
+    private val callback: OnArticleClickListener
+) : ItemViewBinder<Article, SmallNewsViewBinder.ViewHolder>() {
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder =
-        ViewHolder(inflater.inflate(R.layout.binder_small_news_view, parent, false))
+        ViewHolder(inflater.inflate(R.layout.binder_small_news_view, parent, false), callback)
 
     override fun onBindViewHolder(holder: ViewHolder, item: Article) {
         holder.setData(item)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, callback: OnArticleClickListener) : RecyclerView.ViewHolder(view) {
+        private var mArticle: Article? = null
+
+        init { itemView.setOnClickListener { callback.onArticleClicked(mArticle) } }
+
         fun setData(article: Article) {
+            this.mArticle = article
             itemView.tv_title.text = article.title
             itemView.tv_desc.text = article.description
             itemView.tv_source.text = article.source?.name
