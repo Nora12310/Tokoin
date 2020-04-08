@@ -10,4 +10,9 @@
         <item name="android:navigationBarColor">@color/md_white_1000</item>
     </style>
 
+    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_modal_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_modal_out</item>
+    </style>
+
 </resources>

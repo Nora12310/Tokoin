@@ -8,16 +8,23 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.akd.muxic.data.local.AppDatabase
+import org.akd.support.extensions.mutableLiveDataOf
+import org.akd.support.util.preference.SharePrefUtil
 import vn.exmaple.tokoin.common.Constant
 import vn.exmaple.tokoin.data.local.TopHeadlineBoundaryCallback
 import vn.exmaple.tokoin.data.remote.INewsRepository
+import vn.exmaple.tokoin.model.Account
 
 class HomeViewModel(
     application: Application,
     dao: AppDatabase,
     repository: INewsRepository
 ) : AndroidViewModel(application) {
+    private val mSharePref: SharePrefUtil = SharePrefUtil.with(application.applicationContext).ok()
     private val mHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
         mStateLive.value = TopHeadlineBoundaryCallback.DONE
@@ -43,4 +50,14 @@ class HomeViewModel(
 
     val mNewArticleLive: LiveData<Int>
         get() = mCallback.mNewArticle
+
+    val mAccountIsActiveLive: LiveData<Account> =
+        mSharePref.readIntPref(Constant.ACCOUNT_ID, 0).let {
+            val liveData: MutableLiveData<Account> = mutableLiveDataOf()
+            viewModelScope.launch(mHandler) {
+                val account = withContext(Dispatchers.IO) { dao.account.get(it) }
+                account?.apply { liveData.value = this }
+            }
+            return@let liveData
+        }
 }

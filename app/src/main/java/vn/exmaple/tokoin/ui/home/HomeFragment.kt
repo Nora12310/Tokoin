@@ -36,11 +36,12 @@ class HomeFragment : Fragment() {
 
         mViewModel.mTopHeadlineLive.observe(viewLifecycleOwner, Observer { mAdapter.submit(it) })
         mViewModel.mStateLive.observe(viewLifecycleOwner, Observer {
-            val visibility = if (it == TopHeadlineBoundaryCallback.LOADING) View.VISIBLE else View.GONE
+            val visibility =
+                if (it == TopHeadlineBoundaryCallback.LOADING) View.VISIBLE else View.GONE
             mBinder.progress.visibility = visibility
         })
-        mViewModel.mNewArticleLive.observe(viewLifecycleOwner, Observer {
-            if (it > 0) "There are $it new posts".toast(activity)
+        mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer {
+            "${it.userName} logged".toast(activity)
         })
     }
 
