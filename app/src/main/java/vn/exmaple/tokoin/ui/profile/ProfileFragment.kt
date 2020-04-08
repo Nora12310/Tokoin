@@ -36,6 +36,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         mViewModel.mProfilesLive.observe(viewLifecycleOwner, Observer {
             mAdapter.submit(it)
         })
+        mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer {
+            mBinding.tvName.text = it.userName
+            mBinding.tvFollow.text = getString(R.string.following).format(it.keyword)
+        })
     }
 
     private fun initRecyclerView() {

@@ -9,6 +9,9 @@ interface AccountDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(vararg account: Account): List<Long>
 
+    @Query("SELECT * FROM account WHERE id=:id LIMIT 1")
+    suspend fun get(id: Int): Account?
+
     @Query("SELECT * FROM account")
     fun getAll(): DataSource.Factory<Int, Account>
 

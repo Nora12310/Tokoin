@@ -8,7 +8,7 @@
 
 ### Technologies ###
 * Primary Languages: Kotlin
-* Using: MVVM Architecture Patteern, Android CI/CD, Koin-Injection, Moshi, Jetpack Component like: Room, Navigation Component, material design, Stream, sdp, ssp, coroutine,...
+* Using: MVVM Architecture Pattern, Android CI/CD, Koin-Injection, Moshi, Jetpack Component like: Room, Navigation Component, material design, Stream, sdp, ssp, coroutine,...
 
 ### Datasource
 * API Source: https://newsapi.org/

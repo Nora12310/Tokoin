@@ -7,4 +7,7 @@
     <string name="user_name">Username</string>
     <string name="keyword">Keywords you will follow</string>
     <string name="done">Done</string>
+    <string name="following">This Account is following %s keyword.</string>
+    <string name="msg_username_or_keyword_empty">Username or Keyword is empty</string>
+    <string name="msg_account_existed">This account is existed in app. Please using another username.</string>
 </resources>
