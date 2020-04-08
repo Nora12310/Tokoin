@@ -16,7 +16,7 @@ interface ArticleDao {
     @Query("SELECT * FROM article WHERE title=:title LIMIT 1")
     suspend fun getArticle(title: String): Article?
 
-    @Query("SELECT * FROM article WHERE keyword=:keyword")
+    @Query("SELECT * FROM article WHERE keyword=:keyword ORDER BY publishedAt DESC")
     fun getAll(keyword: String): DataSource.Factory<Int, Article>
 
     @Query("SELECT COUNT(*) FROM article WHERE keyword=:keyword")

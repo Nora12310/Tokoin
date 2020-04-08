@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import org.akd.support.extensions.toast
 import org.akd.support.util.Utils
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import vn.exmaple.tokoin.R
 import vn.exmaple.tokoin.databinding.DialogAddProfileVieewBinding
+import vn.exmaple.tokoin.model.Account
 
-class AddProfileDialogFragment : DialogFragment() {
+class AddProfileDialogFragment(
+    private val delegate: (account: Account) -> Unit
+) :
+    DialogFragment() {
     private val mBinding: DialogAddProfileVieewBinding by lazy {
         DialogAddProfileVieewBinding.inflate(layoutInflater)
     }
@@ -40,10 +43,10 @@ class AddProfileDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewModel.mErrorLive.observe(viewLifecycleOwner, Observer {
-            if (it > 0) {
-                mBinding.tvMessage.text = getString(it)
-                return@Observer
-            }
+            mBinding.tvMessage.text = getString(it)
+        })
+        mViewModel.mExecuteLive.observe(viewLifecycleOwner, Observer {
+            delegate(it)
             dismissAllowingStateLoss()
         })
         mBinding.btnDone.setOnClickListener {

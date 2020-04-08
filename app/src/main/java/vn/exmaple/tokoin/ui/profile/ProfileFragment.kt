@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.akd.support.adapter.lists.PageListAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -14,6 +15,8 @@ import vn.exmaple.tokoin.R
 import vn.exmaple.tokoin.binder.AccountViewBinder
 import vn.exmaple.tokoin.databinding.FragmentProfileBinding
 import vn.exmaple.tokoin.dialog.AddProfileDialogFragment
+import vn.exmaple.tokoin.model.Account
+import vn.vtvlive.vtvpay.base.adapter.lists.base.SingleChoiceMode
 
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val mBinding: FragmentProfileBinding by lazy {
@@ -35,15 +38,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         mBinding.tvAddProfile.setOnClickListener(this)
         mViewModel.mProfilesLive.observe(viewLifecycleOwner, Observer {
             mAdapter.submit(it)
+            recycler_view.postDelayed({
+                mAdapter.setSelected(0, true)
+            }, 200L)
         })
-        mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer {
-            mBinding.tvName.text = it.userName
-            mBinding.tvFollow.text = getString(R.string.following).format(it.keyword)
-        })
+        mViewModel.mAccountIsActiveLive.observe(viewLifecycleOwner, Observer { updateUi(it) })
     }
 
     private fun initRecyclerView() {
         mAdapter.register(AccountViewBinder())
+        mAdapter.setChoiceMode(SingleChoiceMode())
         mBinding.recyclerView.layoutManager = LinearLayoutManager(context)
         mBinding.recyclerView.adapter = mAdapter
     }
@@ -51,9 +55,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_add_profile -> {
-                val dialog = AddProfileDialogFragment()
+                val dialog = AddProfileDialogFragment {
+                    updateUi(it)
+                }
                 dialog.show(childFragmentManager, null)
             }
         }
+    }
+
+    private fun updateUi(account: Account) {
+        mBinding.tvName.text = account.userName
+        mBinding.tvFollow.text = getString(R.string.following).format(account.keyword)
     }
 }

@@ -25,9 +25,10 @@ class AddProfileDialogViewModel(
         throwable.printStackTrace()
     }
     val mErrorLive: MutableLiveData<Int> = mutableLiveDataOf()
+    val mExecuteLive: MutableLiveData<Account> = mutableLiveDataOf()
 
     fun save(username: String, keyword: String) {
-        if (username.isEmpty() || keyword.isEmpty()) {
+        if (username.trim().isEmpty() || keyword.trim().isEmpty()) {
             mErrorLive.value = R.string.msg_username_or_keyword_empty
             return
         }
@@ -41,7 +42,7 @@ class AddProfileDialogViewModel(
             val newAccount = Account(id, username, keyword)
             mSharePrefUtil.saveIntPref(Constant.ACCOUNT_ID, newAccount.id)
             withContext(Dispatchers.IO) { dao.account.save(newAccount) }
-            mErrorLive.value = -1
+            mExecuteLive.value = newAccount
         }
     }
 }
