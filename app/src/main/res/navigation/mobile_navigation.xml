@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="vn.exmaple.tokoin.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/act_home_to_detail_screen"
+            app:destination="@id/detail_frag" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_filterable"
+        android:name="vn.exmaple.tokoin.ui.filterable.FilterableFragment"
+        android:label="@string/title_filterable"
+        tools:layout="@layout/fragment_filterable">
+        <action
+            android:id="@+id/act_filter_to_detail_screen"
+            app:destination="@id/detail_frag"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="vn.exmaple.tokoin.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile"/>
+    <fragment
+        android:id="@+id/detail_frag"
+        android:name="vn.exmaple.tokoin.ui.detail.DetailFragment"
+        android:label="Detail Fragment"
+        tools:layout="@layout/fragment_web_view" />
+</navigation>
