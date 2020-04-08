@@ -13,7 +13,8 @@ data class Account(
     var keyword: String,
     var timestamp: Date = Calendar.getInstance().time
 ) : IFlexibleItem {
-    @Ignore var isSelected: Boolean = false
+    @Ignore
+    var isSelected: Boolean = false
 
     override fun areItemsTheSame(iFlexibleItem: IFlexibleItem): Boolean =
         iFlexibleItem is Account && iFlexibleItem.id == id
@@ -24,7 +25,11 @@ data class Account(
                 && iFlexibleItem.keyword == keyword
                 && iFlexibleItem.isSelected == isSelected
 
-    fun isActive(id: Int): Boolean {
-        return id == this.id
+    override fun equals(other: Any?): Boolean {
+        return other is IFlexibleItem && areItemsTheSame(other)
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
     }
 }

@@ -52,7 +52,8 @@ class AddProfileDialogFragment(
         mBinding.btnDone.setOnClickListener {
             mViewModel.save(
                 mBinding.edtUsername.text.toString(),
-                mBinding.edtKeyword.text.toString()
+                mBinding.edtKeyword.text.toString(),
+                mBinding.cbUpdateExistedAccount.isChecked
             )
         }
     }
