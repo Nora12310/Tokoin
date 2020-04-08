@@ -58,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_black"
                     android:gravity="center"
-                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_4sdp"
                     android:maxLines="1"
                     android:textColor="@color/md_green_500"
                     app:layout_constraintBottom_toBottomOf="parent"
