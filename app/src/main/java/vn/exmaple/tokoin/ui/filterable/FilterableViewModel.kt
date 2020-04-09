@@ -39,9 +39,14 @@ class FilterableViewModel(
                 state = mStateLive,
                 keyword = it
             )
+            val config = PagedList.Config.Builder()
+                .setPageSize(20)
+                .setInitialLoadSizeHint(20 * 2)
+                .setEnablePlaceholders(false)
+                .build()
             return@switchMap dao.article.getAll(it)
                 .toLiveData(
-                    pageSize = 20,
+                    config = config,
                     boundaryCallback = callback
                 )
         }
