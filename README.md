@@ -1,6 +1,6 @@
 # SIMPLE TEST OF TOKOIN
 
-### Candidate Infomation ###
+### Candidate Information ###
 * Name:     Duy, Pham Hoang
 * Male:     Male
 * Phone:    0904.341.348
@@ -28,11 +28,12 @@
 
 
 **Koin-Injection:** A pragmatic lightweight dependency injection framework for Kotlin developers. Written in pure Kotlin using functional resolution only: no proxy, no code generation, no reflection!
+
 **Moshi:** Moshi uses Okio to optimize a few things that Gson doesn’t. When reading field names, Moshi doesn’t have to allocate strings or do hash lookups. Moshi scans the input as a sequence of UTF-8 bytes, converting to Java chars lazily. For example, it never needs to convert integer literals to chars. The benefits of these optimizations are particularly pronounced if you’re already using Okio streams. Users of Retrofit and OkHttp in particular benefit from Moshi.
 
-**Jetpack Component:** Room, Navigation Component, material design, Stream, sdp, ssp, coroutine,...
+**Jetpack Component and other:** Room, Navigation Component, material design, Stream, sdp, ssp, coroutine,...
 
 ### Datasource
 * API Source: https://newsapi.org/
-> Thank you abbout your API.
+> Thank you about your API.
 
