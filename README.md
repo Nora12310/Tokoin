@@ -2,7 +2,7 @@
 
 ### Candidate Information ###
 * Name:     Duy, Pham Hoang
-* Male:     Male
+* Gender:     Male
 * Phone:    0904.341.348
 * Skype:    https://lnkd.in/g3i2jgK
 
