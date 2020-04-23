@@ -1,11 +1,5 @@
 # SIMPLE TEST OF TOKOIN
 
-### Candidate Information ###
-* Name:     Duy, Pham Hoang
-* Gender:     Male
-* Phone:    0904.341.348
-* Skype:    https://lnkd.in/g3i2jgK
-
 ### Technologies ###
 **Primary Languages:** Kotlin
 
